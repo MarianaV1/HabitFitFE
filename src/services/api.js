@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-    baseURL: "http://localhost:5000/api", // Cambia esto al URL de tu backend en producción
+    baseURL: "https://habitfitbe.onrender.com/api", // Cambia esto al URL de tu backend en producción
 });
 
 // Agregar el token automáticamente en las solicitudes protegidas
