@@ -20,7 +20,7 @@ const Progreso = () => {
             <div className="text-end mb-4">
                 <button 
                     className="btn btn-primary"
-                    onClick={() => navigate("/registrar-progreso")}
+                    onClick={() => navigate("/progreso/nuevo")}
                 >
                     Registrar Progreso
                 </button>
