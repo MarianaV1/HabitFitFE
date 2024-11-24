@@ -14,14 +14,17 @@ const Registro = () => {
         setFormData({ ...formData, [name]: value });
     };
 
+    const [error, setError] = useState("");
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setError("");
         try {
             await API.post("/usuarios/registro", formData);
             alert("Registro exitoso");
             window.location.href = "/login";
         } catch (error) {
-            console.error(error.response?.data || "Error al registrarse");
+            setError(error.response?.data || "Error al registrarse");
         }
     };
 
@@ -63,6 +66,7 @@ const Registro = () => {
                             required
                         />
                     </div>
+                    {error && <p className="text-danger">{error}</p>}
                     <button type="submit" className="btn btn-success w-100">Registrarse</button>
                 </form>
             </div>

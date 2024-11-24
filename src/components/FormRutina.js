@@ -6,6 +6,7 @@ const FormRutina = () => {
     const [nombre_rutina, setNombreRutina] = useState("");
     const [ejercicios, setEjercicios] = useState([]);
     const [frecuencia, setFrecuencia] = useState("");
+    const [error, setError] = useState(""); // Estado para manejar errores
     const navigate = useNavigate();
 
     const agregarEjercicio = () => {
@@ -20,11 +21,21 @@ const FormRutina = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setError(""); // Reinicia el error al intentar enviar
+
+        // Validación: Verifica que haya al menos un ejercicio
+        if (ejercicios.length === 0) {
+            setError("Debe agregar al menos un ejercicio para guardar la rutina.");
+            return;
+        }
+
+        // Enviar datos al backend
         try {
             await API.post("/rutinas", { nombre_rutina, ejercicios, frecuencia });
             navigate("/rutinas");
         } catch (error) {
             console.error("Error al crear rutina:", error.response?.data || error.message);
+            setError("Ocurrió un error al guardar la rutina. Intente nuevamente.");
         }
     };
 
@@ -32,6 +43,11 @@ const FormRutina = () => {
         <div className="container mt-5">
             <h1 className="text-center">Crear Rutina</h1>
             <form onSubmit={handleSubmit}>
+                {error && (
+                    <div className="alert alert-danger" role="alert">
+                        {error}
+                    </div>
+                )}
                 <div className="mb-3">
                     <label className="form-label">Nombre de la Rutina</label>
                     <input
@@ -62,6 +78,7 @@ const FormRutina = () => {
                             placeholder="Nombre del ejercicio"
                             value={ejercicio.nombre}
                             onChange={(e) => handleEjercicioChange(index, "nombre", e.target.value)}
+                            required
                         />
                         <input
                             type="number"
@@ -69,6 +86,7 @@ const FormRutina = () => {
                             placeholder="Repeticiones"
                             value={ejercicio.repeticiones}
                             onChange={(e) => handleEjercicioChange(index, "repeticiones", e.target.value)}
+                            required
                         />
                         <input
                             type="number"
@@ -76,6 +94,7 @@ const FormRutina = () => {
                             placeholder="Series"
                             value={ejercicio.series}
                             onChange={(e) => handleEjercicioChange(index, "series", e.target.value)}
+                            required
                         />
                         <input
                             type="number"
@@ -83,6 +102,7 @@ const FormRutina = () => {
                             placeholder="Peso (kg)"
                             value={ejercicio.peso}
                             onChange={(e) => handleEjercicioChange(index, "peso", e.target.value)}
+                            required
                         />
                     </div>
                 ))}

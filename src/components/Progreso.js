@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import API from "../services/api";
 
 const Progreso = () => {
     const [progreso, setProgreso] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchProgreso = async () => {
@@ -15,6 +17,14 @@ const Progreso = () => {
     return (
         <div className="container mt-5">
             <h1 className="text-center">Progreso</h1>
+            <div className="text-end mb-4">
+                <button 
+                    className="btn btn-primary"
+                    onClick={() => navigate("/registrar-progreso")}
+                >
+                    Registrar Progreso
+                </button>
+            </div>
             <div className="row">
                 {progreso.map((p) => (
                     <div key={p._id} className="col-md-4 mb-4">

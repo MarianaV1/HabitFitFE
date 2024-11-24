@@ -8,6 +8,7 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setError("");
         try {
             const { data } = await API.post("/usuarios/login", { email, contraseña });
             localStorage.setItem("token", data.token);
